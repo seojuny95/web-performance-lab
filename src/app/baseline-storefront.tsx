@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { Video } from "@/components/video";
+
 type Product = {
   name: string;
   tagline: string;
@@ -117,9 +119,18 @@ export function BaselineStorefront() {
           <p className="eyebrow">A room of sound</p>
           <h2>Sound that settles<br />naturally into the room</h2>
         </div>
-        <video autoPlay loop muted playsInline preload="auto">
-          <source src="/speaker-demo.mp4" type="video/mp4" />
-        </video>
+        <Video
+          src="/speaker-demo.mp4"
+          poster="/speaker-demo-poster.jpg"
+          width={1920}
+          height={1080}
+          loading="lazy"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        />
       </section>
 
       <section className="reviews" id="reviews">
