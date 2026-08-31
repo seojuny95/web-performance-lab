@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type Product = {
@@ -23,6 +24,9 @@ type Recommendation = {
   price: string;
   image: string;
 };
+
+const RELATED_PRODUCT_IMAGE_SIZES =
+  "(max-width: 800px) 86vw, calc((86vw - 40px) / 3)";
 
 export function BaselineStorefront() {
   const [product, setProduct] = useState<Product | null>(null);
@@ -96,7 +100,14 @@ export function BaselineStorefront() {
           )}
         </div>
         <div className="hero-media">
-          <img src="/speaker-hero.png" alt="Still One wireless speaker" />
+          <Image
+            src="/speaker-hero.png"
+            alt="Still One wireless speaker"
+            width={2400}
+            height={1800}
+            sizes="(max-width: 800px) 100vw, 61vw"
+            loading="eager"
+          />
           <span>Designed for quiet moments</span>
         </div>
       </section>
@@ -136,7 +147,14 @@ export function BaselineStorefront() {
           <div className="recommendation-grid">
             {recommendations.map((item) => (
               <article key={item.id}>
-                <img src={item.image} alt={item.name} />
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={1448}
+                  height={1086}
+                  sizes={RELATED_PRODUCT_IMAGE_SIZES}
+                  loading="lazy"
+                />
                 <h3>{item.name}</h3>
                 <p>{item.price}</p>
               </article>
