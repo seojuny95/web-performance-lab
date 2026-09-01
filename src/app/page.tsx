@@ -1,19 +1,27 @@
+import { Suspense } from "react";
 import { connection } from "next/server";
 
 import { ProductDetails } from "@/components/product/product-details";
-import { ProductReviews } from "@/components/product/product-reviews";
+import {
+  ProductReviews,
+  ProductReviewsFallback,
+} from "@/components/product/product-reviews";
 import { ProductStory } from "@/components/product/product-story";
-import { RelatedProducts } from "@/components/product/related-products";
+import {
+  RelatedProducts,
+  RelatedProductsFallback,
+} from "@/components/product/related-products";
 import { getProduct } from "@/lib/product";
 import { getRelatedProducts, getReviews } from "@/lib/product-content";
 
 export default async function Home() {
   await connection();
-  const [product, reviews, relatedProducts] = await Promise.all([
-    getProduct(),
-    getReviews(),
-    getRelatedProducts(),
-  ]);
+
+  const productPromise = getProduct();
+  const reviewsPromise = getReviews();
+  const relatedProductsPromise = getRelatedProducts();
+
+  const product = await productPromise;
 
   return (
     <main>
@@ -27,8 +35,12 @@ export default async function Home() {
       </header>
       <ProductDetails product={product} />
       <ProductStory />
-      <ProductReviews reviews={reviews} />
-      <RelatedProducts products={relatedProducts} />
+      <Suspense fallback={<ProductReviewsFallback />}>
+        <ProductReviews reviewsPromise={reviewsPromise} />
+      </Suspense>
+      <Suspense fallback={<RelatedProductsFallback />}>
+        <RelatedProducts productsPromise={relatedProductsPromise} />
+      </Suspense>
       <footer>Still Objects, Seoul · Web Performance Lab</footer>
     </main>
   );
