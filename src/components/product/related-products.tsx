@@ -1,11 +1,5 @@
 import Image from "next/image";
-
-export type RelatedProduct = {
-  id: number;
-  name: string;
-  price: string;
-  image: string;
-};
+import type { RelatedProduct } from "@/lib/product-content";
 
 const RELATED_PRODUCT_IMAGE_SIZES =
   "(max-width: 800px) 86vw, calc((86vw - 40px) / 3)";

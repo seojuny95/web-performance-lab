@@ -1,9 +1,4 @@
-export type Review = {
-  id: number;
-  author: string;
-  rating: number;
-  body: string;
-};
+import type { Review } from "@/lib/product-content";
 
 export function ProductReviews({ reviews }: { reviews: Review[] }) {
   return (
